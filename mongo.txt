@@ -1,1 +1,31 @@
+1. Create a collection named orders:
+db.createCollection('orders')
 
+2. Insert at least 3 documents that represent an order. 
+orders.insert({ productName: "Dongle", unitPrice: 15, quantity: 6, orderTotal: 90, orderDate: new ISODate('2017-02-03')});
+orders.insert({productName: "Cat tree", unitPrice: 50, quantity: 2, orderTotal: 100, orderDate: new ISODate('2017-04-04')});
+orders.insert({productName: "coffee mug", unitPrice: 5, quantity: 8, orderTotal: 60, orderDate: new ISODate('2017-01-02')});
+
+3. Find all orders and make them look pretty.
+orders.find().pretty()
+
+4. Find all orders with an orderDate that is after 1/31/2017.
+orders.find({orderDate: {$gt: ISODate('2017-01-31')}})
+
+5. Change the orderTotal from 2/3/2017 to 63 dollars (you do NOT have to ensure the lineItems' unitPrice * quantity add up to the orderTotal)
+
+orders.update({orderDate:ISODate("2017-01-02T00:00:00Z")}, {$set: {orderTotal: 63}});
+
+6. Add another lineItem to the order from 4/4/2017
+ orders.update({orderDate:ISODate("2017-04-04T00:00:00Z")}, {$push:{lineItems:{color:"red"}}});
+
+7. Change the first lineItem in the order from 1/2/2017 to be for 2 'transistor radio's
+ orders.update({orderDate:ISODate("2017-01-02T00:00:00Z")}, {$set: {lineItems:{productName: "transister radio", quantity:2}}});
+ 
+ 8. I did not get this one working with $elemMatch, but did get this to work: 
+ 
+ orders.find({quantity: {$lt: 10, $gt: 2}});
+ 
+ *Also, I misread the directions initially, and left out the lineItems. I did not have time to go through and add all of them, but I think my answers mostly get the gist of what it should have looked like. 
+ 
+ 
